@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Medical Students Association - Interest Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-lora {
+            font-family: 'Lora', serif;
+        }
+        #geometric-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: #0d1a2e;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+        .accordion-content.open {
+            max-height: 1000px; /* Set a large enough max-height */
+            transition: max-height 1s ease-in-out;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-button.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #63b3ed;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Animated Background -->
+    <canvas id="geometric-background"></canvas>
+
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="max-w-4xl w-full bg-slate-800/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 md:p-12 border border-slate-700">
+
+            <!-- Header Section -->
+            <div id="header" class="text-center mb-8">
+                <h1 class="font-lora text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-wider text-teal-300">MMSA</h1>
+                <p class="mt-2 text-lg sm:text-xl text-slate-300">Muslim Medical Students Association</p>
+                <p class="mt-4 max-w-3xl mx-auto text-slate-400">
+                    As-salamu alaykum! Welcome to the MMSA. Please let us know your interests so we can plan meaningful events and initiatives for the year.
+                </p>
+            </div>
+
+            <!-- Sign-up Form -->
+            <form id="mmsaForm" class="space-y-6">
+
+                <!-- Personal Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-slate-300 mb-2">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300" placeholder="Aisha">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300" placeholder="Khan">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-300 mb-2">School Email</label>
+                        <input type="email" id="email" name="email" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300" placeholder="a.khan@medschool.edu">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Phone Number <span class="text-slate-500">(Optional)</span></label>
+                        <input type="tel" id="phone" name="phone" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300" placeholder="(123) 456-7890">
+                    </div>
+                     <div class="md:col-span-2">
+                        <label for="classYear" class="block text-sm font-medium text-slate-300 mb-2">Class Year</label>
+                        <select id="classYear" name="classYear" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300">
+                            <option value="" disabled selected>Select your year</option>
+                            <option value="M1">M1</option>
+                            <option value="M2">M2</option>
+                            <option value="M3">M3</option>
+                            <option value="M4">M4</option>
+                            <option value="Other">Other (Graduate, Faculty, etc.)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Interests Accordion -->
+                <div>
+                    <h3 class="text-lg font-semibold text-teal-300 mb-4 border-b border-slate-700 pb-2">What are you interested in? (Check all that apply)</h3>
+                    <div class="space-y-2">
+                        <!-- Community & Social -->
+                        <div class="accordion-item bg-slate-900/50 rounded-lg border border-slate-700">
+                            <button type="button" class="accordion-button w-full flex justify-between items-center text-left p-4 font-semibold text-slate-200 hover:bg-slate-700/50 rounded-t-lg">
+                                <span>Community & Social</span>
+                                <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="p-4 space-y-3"><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="iftar" name="interests" type="checkbox" value="Iftar Dinners" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="iftar" class="font-medium text-slate-300">Iftar Dinners</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="eid" name="interests" type="checkbox" value="Eid Celebrations" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="eid" class="font-medium text-slate-300">Eid Celebrations</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="social" name="interests" type="checkbox" value="Social Mixers" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="social" class="font-medium text-slate-300">General Social Mixers</label></div></div></div></div>
+                        </div>
+                        <!-- Education & Spirituality -->
+                        <div class="accordion-item bg-slate-900/50 rounded-lg border border-slate-700">
+                            <button type="button" class="accordion-button w-full flex justify-between items-center text-left p-4 font-semibold text-slate-200 hover:bg-slate-700/50">
+                                <span>Education & Spirituality</span>
+                                <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="p-4 space-y-3"><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="community-lectures" name="interests" type="checkbox" value="Community Lectures" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="community-lectures" class="font-medium text-slate-300">Attending Community Lectures</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="speakers" name="interests" type="checkbox" value="Guest Speakers" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="speakers" class="font-medium text-slate-300">Guest Speaker Events</label></div></div></div></div>
+                        </div>
+                        <!-- Service & Outreach -->
+                        <div class="accordion-item bg-slate-900/50 rounded-lg border border-slate-700">
+                            <button type="button" class="accordion-button w-full flex justify-between items-center text-left p-4 font-semibold text-slate-200 hover:bg-slate-700/50">
+                                <span>Service & Outreach</span>
+                                <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="p-4 space-y-3"><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="masjid-cleanup" name="interests" type="checkbox" value="Masjid Clean-ups" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="masjid-cleanup" class="font-medium text-slate-300">Masjid Clean-ups</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="refugee-tutoring" name="interests" type="checkbox" value="Refugee Tutoring" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="refugee-tutoring" class="font-medium text-slate-300">Teaching/Tutoring Refugees</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="mentorship" name="interests" type="checkbox" value="Mentorship Programs" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="mentorship" class="font-medium text-slate-300">Mentorship Programs (for pre-meds, etc.)</label></div></div></div></div>
+                        </div>
+                         <!-- Professional Development -->
+                        <div class="accordion-item bg-slate-900/50 rounded-lg border border-slate-700">
+                            <button type="button" class="accordion-button w-full flex justify-between items-center text-left p-4 font-semibold text-slate-200 hover:bg-slate-700/50">
+                                <span>Professional Development</span>
+                                <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="p-4 space-y-3"><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="networking" name="interests" type="checkbox" value="Networking" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="networking" class="font-medium text-slate-300">Networking with Muslim Physicians</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="residency" name="interests" type="checkbox" value="Residency Workshops" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="residency" class="font-medium text-slate-300">Residency Application Workshops</label></div></div><div class="relative flex items-start"><div class="flex h-5 items-center"><input id="research" name="interests" type="checkbox" value="Research" class="form-checkbox h-5 w-5 rounded bg-slate-700 border-slate-600 text-teal-500 focus:ring-teal-500"></div><div class="ml-3 text-sm"><label for="research" class="font-medium text-slate-300">Connecting for Research Opportunities</label></div></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center pt-4">
+                    <button id="submitButton" type="submit" class="font-montserrat bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold py-3 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-teal-500/20 flex items-center justify-center w-full md:w-auto mx-auto">
+                        <span id="buttonText">Join Us</span>
+                        <span id="buttonLoader" class="hidden loader"></span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Submission Messages -->
+            <div id="submissionMessage" class="hidden text-center mt-8">
+                <div class="p-4 bg-green-900/50 border border-green-700 rounded-lg">
+                    <p class="font-semibold text-green-300">JazakAllah Khair! Your submission has been received.</p>
+                </div>
+                <button id="newFormButton" class="mt-6 font-montserrat bg-slate-600 hover:bg-slate-500 text-white font-bold py-3 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    Next Student
+                </button>
+            </div>
+            <div id="errorMessage" class="hidden text-center mt-8 p-4 bg-red-900/50 border border-red-700 rounded-lg">
+                <!-- Error messages will be inserted here by the script -->
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- Element References ---
+        const form = document.getElementById('mmsaForm');
+        const submitButton = document.getElementById('submitButton');
+        const buttonText = document.getElementById('buttonText');
+        const buttonLoader = document.getElementById('buttonLoader');
+        const submissionMessage = document.getElementById('submissionMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const newFormButton = document.getElementById('newFormButton');
+        const header = document.getElementById('header');
+
+        // --- Accordion Logic ---
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const isOpening = !content.classList.contains('open');
+
+                // Close all other accordions
+                accordionButtons.forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.classList.remove('open');
+                        otherButton.nextElementSibling.classList.remove('open');
+                    }
+                });
+
+                // Toggle the clicked one
+                button.classList.toggle('open');
+                content.classList.toggle('open');
+            });
+        });
+
+        // --- Form Submission Logic ---
+        // IMPORTANT: Replace this URL with your own Google Apps Script deployment URL
+        const googleScriptURL = 'https://script.google.com/macros/s/AKfycbz1l5LVk3tqoaK6I_DNgb7g634tUOwRxl6Z6Grdto8BAZAXxYR8_rtkG5OZ1IJh64BQ/exec';
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            buttonText.classList.add('hidden');
+            buttonLoader.classList.remove('hidden');
+            submitButton.disabled = true;
+            errorMessage.classList.add('hidden');
+
+            const formData = new FormData(form);
+            
+            // Special handling for checkboxes
+            const interests = Array.from(form.querySelectorAll('input[name="interests"]:checked')).map(cb => cb.value);
+            formData.set('interests', interests.join(', '));
+
+            fetch(googleScriptURL, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(res => res.json()) // <-- UPDATED: Always try to parse the JSON response
+            .then(data => {
+                console.log(data); // Log the response from the script for debugging
+                if (data.result === 'success') {
+                    header.classList.add('hidden');
+                    form.classList.add('hidden');
+                    submissionMessage.classList.remove('hidden');
+                } else {
+                    // If the script returns an error, show it
+                    throw new Error(data.message || 'An unknown error occurred.');
+                }
+            })
+            .catch(error => {
+                console.error('Error!', error);
+                errorMessage.innerHTML = `<p class="font-semibold text-red-300">Submission failed. Please try again.</p><p class="text-sm text-red-400 mt-2">${error.message}</p>`;
+                errorMessage.classList.remove('hidden');
+            })
+            .finally(() => {
+                // This block will run regardless of success or failure
+                buttonText.classList.remove('hidden');
+                buttonLoader.classList.add('hidden');
+                submitButton.disabled = false;
+            });
+        });
+
+        // --- New Form Button Logic ---
+        newFormButton.addEventListener('click', () => {
+            submissionMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            header.classList.remove('hidden');
+            form.classList.remove('hidden');
+            form.reset();
+            buttonText.classList.remove('hidden');
+            buttonLoader.classList.add('hidden');
+            submitButton.disabled = false;
+            accordionButtons.forEach(button => {
+                button.classList.remove('open');
+                button.nextElementSibling.classList.remove('open');
+            });
+        });
+
+        // --- Animated Geometric Background ---
+        const canvas = document.getElementById('geometric-background');
+        const ctx = canvas.getContext('2d');
+        let lines = [];
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.body.scrollHeight > window.innerHeight ? document.body.scrollHeight : window.innerHeight;
+        }
+
+        class Line {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speed = Math.random() * 0.3 + 0.1;
+                this.angle = Math.random() * 2 * Math.PI;
+                this.length = Math.random() * 100 + 50;
+                this.opacity = Math.random() * 0.2 + 0.05;
+                this.color = `hsl(${Math.random() * 60 + 160}, 50%, 30%)`; // Shades of teal/cyan
+            }
+            update() {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                }
+            }
+            draw() {
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + Math.cos(this.angle) * this.length, this.y + Math.sin(this.angle) * this.length);
+                ctx.stroke();
+            }
+        }
+
+        function connectLines() {
+            for (let i = 0; i < lines.length; i++) {
+                for (let j = i; j < lines.length; j++) {
+                    const dist = Math.hypot(lines[i].x - lines[j].x, lines[i].y - lines[j].y);
+                    if (dist < 250) {
+                        ctx.beginPath();
+                        ctx.moveTo(lines[i].x, lines[i].y);
+                        ctx.lineTo(lines[j].x, lines[j].y);
+                        ctx.strokeStyle = `hsla(180, 50%, 40%, ${1 - dist / 250})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function init() {
+            setCanvasSize();
+            lines = [];
+            const lineCount = Math.floor(canvas.width / 40);
+            for (let i = 0; i < lineCount; i++) {
+                lines.push(new Line());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            lines.forEach(line => {
+                line.update();
+                // line.draw(); // Optional: draw the lines themselves
+            });
+            connectLines();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
+
+</body>
+</html>
